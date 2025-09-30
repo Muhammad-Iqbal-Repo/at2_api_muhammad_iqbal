@@ -1,0 +1,41 @@
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[project]
+name = "at2_api_muhammad_iqbal"
+version = "0.0.1"
+description = "A short description of the project."
+authors = [
+  { name = "Your name (or your organization/company/team)" },
+]
+
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    
+]
+dependencies = [
+    "loguru",
+    "mkdocs",
+    "pip",
+    "python-dotenv",
+    "ruff",
+    "tqdm",
+    "typer",
+]
+requires-python = "==3.11.4"
+
+
+[tool.ruff]
+line-length = 99
+src = ["at2_api_muhammad_iqbal"]
+include = ["pyproject.toml", "at2_api_muhammad_iqbal/**/*.py"]
+
+[tool.ruff.lint]
+extend-select = ["I"]  # Add import sorting
+
+[tool.ruff.lint.isort]
+known-first-party = ["at2_api_muhammad_iqbal"]
+force-sort-within-sections = true
+
