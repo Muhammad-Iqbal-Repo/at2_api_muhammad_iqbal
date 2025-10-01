@@ -23,6 +23,10 @@ dependencies = [
     "ruff",
     "tqdm",
     "typer",
+    "fastapi (>=0.118.0,<0.119.0)",
+    "uvicorn (>=0.37.0,<0.38.0)",
+    "pandas (>=2.3.3,<3.0.0)",
+    "joblib (>=1.5.2,<2.0.0)",
 ]
 requires-python = "==3.11.4"
 
