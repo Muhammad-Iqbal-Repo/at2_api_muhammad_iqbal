@@ -1,0 +1,2 @@
+docker build -t dockeriqbal987/36120_at2_api_muhammad_iqbal:1.0.7 .  
+docker push dockeriqbal987/36120_at2_api_muhammad_iqbal:1.0.7 

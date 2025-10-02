@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Query, HTTPException
 from joblib import load
+from pathlib import Path
 from datetime import date
 from datetime import datetime, timedelta
 import pandas as pd
@@ -7,10 +8,14 @@ import pandas as pd
 app = FastAPI()
 # add constant
 GITHUB_URL = "https://github.com/Muhammad-Iqbal-Repo/at2_api_muhammad_iqbal.git"
-RAIN_MODEL_PATH = '../models/rain.pkl'
-PRECIPITATION_MODEL_PATH = '../models/precipitation.pkl'
-RAIN_FEATURES_PATH = '../data/class_features.csv'
-PRECIP_FEATURES_PATH = '../data/regres_features.csv'
+
+# get parents
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+RAIN_MODEL_PATH = BASE_DIR / 'models' / 'rain.pkl'
+PRECIPITATION_MODEL_PATH = BASE_DIR / 'models' / 'precipitation.pkl'
+RAIN_FEATURES_PATH = BASE_DIR / 'data' / 'class_features.csv'
+PRECIP_FEATURES_PATH = BASE_DIR / 'data' / 'regres_features.csv'
 
 RAIN_TARGET = 'rain_in_7_days'
 PRECIP_TARGET = 'volume_in_3_days'
@@ -159,7 +164,7 @@ def predict_rain(input_date: date = Query(..., alias="date", description="YYYY-M
     
     # get features for the given date
     row = df_rain.loc[input_date, RAIN_FEATURES]
-    if getattr(row, "ndim", 1) > 1:   # if multiple rows, take the first
+    if getattr(row, "ndim", 1) > 1: 
         row = row.iloc[0]
     X_df = pd.DataFrame([row.values], columns=RAIN_FEATURES)
     
@@ -190,7 +195,7 @@ def predict_precipitation(input_date: date = Query(..., alias="date", descriptio
     
     # get features for the given date
     row = df_precip.loc[input_date, PRECIP_FEATURES]
-    if getattr(row, "ndim", 1) > 1:   # if multiple rows, take the first
+    if getattr(row, "ndim", 1) > 1:
         row = row.iloc[0]
     X_df = pd.DataFrame([row.values], columns=PRECIP_FEATURES)
     
@@ -201,8 +206,8 @@ def predict_precipitation(input_date: date = Query(..., alias="date", descriptio
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Prediction error: {e}")
     
-    start_date = input_date + timedelta(days=3)
-    end_date = input_date + timedelta(days=5)
+    start_date = input_date + timedelta(days=1)
+    end_date = input_date + timedelta(days=3)
     
     return {
         "Input Date": str(input_date),
